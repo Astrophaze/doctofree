@@ -71,11 +71,11 @@ class Patient
      */
     #[ORM\OneToMany(targetEntity: Rendezvous::class, mappedBy: 'patient')]
     #[Groups(['patient:read'])]
-    private Collection $rendezVouses;
+    private Collection $rendezVous;
 
     public function __construct()
     {
-        $this->rendezVouses = new ArrayCollection();
+        $this->rendezVous = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,27 +194,27 @@ class Patient
     /**
      * @return Collection<int, Rendezvous>
      */
-    public function getRendezVouses(): Collection
+    public function getRendezVous(): Collection
     {
-        return $this->rendezVouses;
+        return $this->rendezVous;
     }
 
-    public function addRendezVouse(RendezVous $rendezVouse): static
+    public function addRendezVous(Rendezvous $rendezVous): static
     {
-        if (!$this->rendezVouses->contains($rendezVouse)) {
-            $this->rendezVouses->add($rendezVouse);
-            $rendezVouse->setPatient($this);
+        if (!$this->rendezVous->contains($rendezVous)) {
+            $this->rendezVous->add($rendezVous);
+            $rendezVous->setPatient($this);
         }
 
         return $this;
     }
 
-    public function removeRendezVouse(RendezVous $rendezVouse): static
+    public function removeRendezVous(Rendezvous $rendezVous): static
     {
-        if ($this->rendezVouses->removeElement($rendezVouse)) {
+        if ($this->rendezVous->removeElement($rendezVous)) {
             // set the owning side to null (unless already changed)
-            if ($rendezVouse->getPatient() === $this) {
-                $rendezVouse->setPatient(null);
+            if ($rendezVous->getPatient() === $this) {
+                $rendezVous->setPatient(null);
             }
         }
 

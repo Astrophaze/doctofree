@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
     operations: [
-        new GetCollection(normalizationContext: ['groups' => ['rendezvous:list']]),
-        new Get(normalizationContext: ['groups' => ['rendezvous:read']]),
+        new GetCollection(uriTemplate: '/rendezvous', normalizationContext: ['groups' => ['rendezvous:list']]),
+        new Get(uriTemplate: '/rendezvous/{id}', normalizationContext: ['groups' => ['rendezvous:read']]),
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['medecin' => 'exact', 'patient' => 'exact', 'statut' => 'exact'])]
@@ -44,7 +44,7 @@ class Rendezvous
     #[Groups(['rendezvous:list', 'rendezvous:read', 'patient:read'])]
     private ?string $motif = null;
 
-    #[ORM\ManyToOne(targetEntity: Patient::class, inversedBy: 'rendezVouses')]
+    #[ORM\ManyToOne(targetEntity: Patient::class, inversedBy: 'rendezVous')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['rendezvous:list', 'rendezvous:read'])]
     private ?Patient $patient = null;
