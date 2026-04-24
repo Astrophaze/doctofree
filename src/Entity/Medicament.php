@@ -30,7 +30,7 @@ class Medicament
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['medicament:read', 'prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['medicament:read', 'prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
@@ -42,7 +42,7 @@ class Medicament
     private ?string $forme = null;
 
     #[ORM\Column(length: 100)]
-    #[Groups(['medicament:read', 'prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['medicament:read', 'prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?string $dosage = null;
 
     /**
@@ -130,7 +130,6 @@ class Medicament
     public function removePrescription(Prescription $prescription): static
     {
         if ($this->prescriptions->removeElement($prescription)) {
-            // set the owning side to null (unless already changed)
             if ($prescription->getMedicament() === $this) {
                 $prescription->setMedicament(null);
             }

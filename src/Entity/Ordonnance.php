@@ -43,7 +43,7 @@ class Ordonnance
      * @var Collection<int, Prescription>
      */
     #[ORM\OneToMany(targetEntity: Prescription::class, mappedBy: 'ordonnance')]
-    #[Groups(['ordonnance:read', 'consultation:read'])]
+    #[Groups(['ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private Collection $prescriptions;
 
     #[ORM\OneToOne(mappedBy: 'ordonnance', targetEntity: Consultation::class)]
@@ -116,7 +116,6 @@ class Ordonnance
     public function removePrescription(Prescription $prescription): static
     {
         if ($this->prescriptions->removeElement($prescription)) {
-            // set the owning side to null (unless already changed)
             if ($prescription->getOrdonnance() === $this) {
                 $prescription->setOrdonnance(null);
             }

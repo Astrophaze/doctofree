@@ -27,7 +27,6 @@ class Patient
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['patient:list', 'patient:read', 'rendezvous:list', 'rendezvous:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
@@ -43,15 +42,13 @@ class Patient
     private ?\DateTimeInterface $date_naissance = null;
 
     #[ORM\Column(length: 10)]
-    #[Groups(['patient:read'])]
     private ?string $sexe = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['patient:read'])]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 20)]
-    #[Groups(['patient:list', 'patient:read'])]
+    #[Groups(['patient:list'])]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 255)]
@@ -212,7 +209,6 @@ class Patient
     public function removeRendezVous(Rendezvous $rendezVous): static
     {
         if ($this->rendezVous->removeElement($rendezVous)) {
-            // set the owning side to null (unless already changed)
             if ($rendezVous->getPatient() === $this) {
                 $rendezVous->setPatient(null);
             }

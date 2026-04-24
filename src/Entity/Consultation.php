@@ -33,7 +33,7 @@ class Consultation
     private ?\DateTimeInterface $date_heure = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['consultation:read'])]
+    #[Groups(['consultation:read', 'rendezvous:read'])]
     private ?string $anamnese = null;
 
     #[ORM\Column(length: 255)]
@@ -41,7 +41,7 @@ class Consultation
     private ?string $diagnostic = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['consultation:read'])]
+    #[Groups(['consultation:read', 'rendezvous:read'])]
     private ?string $notes = null;
 
     #[ORM\OneToOne(inversedBy: 'consultation', cascade: ['persist', 'remove'])]

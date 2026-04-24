@@ -28,15 +28,15 @@ class Prescription
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?string $posologie = null;
 
     #[ORM\Column]
-    #[Groups(['prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?int $duree_jours = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?string $frequence = null;
 
     #[ORM\ManyToOne(inversedBy: 'prescriptions')]
@@ -44,7 +44,7 @@ class Prescription
 
     #[ORM\ManyToOne(inversedBy: 'prescriptions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['prescription:read', 'ordonnance:read', 'consultation:read'])]
+    #[Groups(['prescription:read', 'ordonnance:list', 'ordonnance:read', 'consultation:read'])]
     private ?Medicament $medicament = null;
 
     public function getId(): ?int

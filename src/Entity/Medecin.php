@@ -26,7 +26,7 @@ class Medecin
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['medecin:list', 'medecin:read', 'rendezvous:list', 'rendezvous:read', 'cabinet:read', 'consultation:list', 'consultation:read', 'patient:read'])]
+    #[Groups(['medecin:list', 'medecin:read', 'cabinet:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
