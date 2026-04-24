@@ -31,7 +31,7 @@ class Cabinet
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['cabinet:list', 'cabinet:read'])]
+    #[Groups(['cabinet:list', 'cabinet:read', 'medecin:read'])]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 20)]
