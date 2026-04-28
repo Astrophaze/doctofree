@@ -216,4 +216,9 @@ class Medecin
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
 }
