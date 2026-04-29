@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Patients{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">Patients</h1>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>Sexe</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>N° sécu</th>
+            <th>Inscription</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for patient in patients %}
+        <tr>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.nom }}</td>
+            <td>{{ patient.prenom }}</td>
+            <td>{{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '' }}</td>
+            <td>{{ patient.sexe }}</td>
+            <td>{{ patient.adresse }}</td>
+            <td>{{ patient.telephone }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.numeroSecu }}</td>
+            <td>{{ patient.dateInscription ? patient.dateInscription|date('d/m/Y') : '' }}</td>
+            <td>
+                <a href="{{ path('app_admin_patient_show', {'id': patient.id}) }}" class="btn btn-outline-primary">Voir</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

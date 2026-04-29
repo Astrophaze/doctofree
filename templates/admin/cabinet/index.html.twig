@@ -1,0 +1,32 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Cabinets{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">Cabinets</h1>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for cabinet in cabinets %}
+        <tr>
+            <td>{{ cabinet.id }}</td>
+            <td>{{ cabinet.nom }}</td>
+            <td>{{ cabinet.adresse }}</td>
+            <td>{{ cabinet.telephone }}</td>
+            <td>
+                <a href="{{ path('app_admin_cabinet_show', {'id': cabinet.id}) }}" class="btn btn-outline-primary">Voir</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

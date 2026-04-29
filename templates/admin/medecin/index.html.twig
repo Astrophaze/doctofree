@@ -1,0 +1,36 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Médecins{% endblock %}
+
+{% block admin_content %}
+<h1 class="h3 mb-4">Médecins</h1>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>RPPS</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for medecin in medecins %}
+        <tr>
+            <td>{{ medecin.id }}</td>
+            <td>{{ medecin.nom }}</td>
+            <td>{{ medecin.prenom }}</td>
+            <td>{{ medecin.rpps }}</td>
+            <td>{{ medecin.telephone }}</td>
+            <td>{{ medecin.email }}</td>
+            <td>
+                <a href="{{ path('app_admin_medecin_show', {'id': medecin.id}) }}" class="btn btn-outline-primary">Voir</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

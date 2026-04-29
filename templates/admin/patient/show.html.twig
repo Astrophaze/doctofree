@@ -1,0 +1,116 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ patient.prenom }} {{ patient.nom }}{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">{{ patient.prenom }} {{ patient.nom }}</h1>
+    <a href="{{ path('app_admin_patient_index') }}" class="btn btn-outline-secondary">Retour</a>
+</div>
+
+<table class="table mb-4">
+    <tbody>
+        <tr><th>ID</th><td>{{ patient.id }}</td></tr>
+        <tr><th>Nom</th><td>{{ patient.nom }}</td></tr>
+        <tr><th>Prénom</th><td>{{ patient.prenom }}</td></tr>
+        <tr><th>Date de naissance</th><td>{{ patient.dateNaissance ? patient.dateNaissance|date('d/m/Y') : '—' }}</td></tr>
+        <tr><th>Sexe</th><td>{{ patient.sexe }}</td></tr>
+        <tr><th>Adresse</th><td>{{ patient.adresse }}</td></tr>
+        <tr><th>Téléphone</th><td>{{ patient.telephone }}</td></tr>
+        <tr><th>Email</th><td>{{ patient.email }}</td></tr>
+        <tr><th>N° sécurité sociale</th><td>{{ patient.numeroSecu }}</td></tr>
+        <tr><th>Date d'inscription</th><td>{{ patient.dateInscription ? patient.dateInscription|date('d/m/Y') : '—' }}</td></tr>
+    </tbody>
+</table>
+
+<h5 class="mb-3">Consultations</h5>
+{% set consultations = patient.rendezVous|filter(r => r.consultation is not null) %}
+{% if consultations is not empty %}
+<table class="table mb-4">
+    <thead class="table-dark">
+            <th>Date</th>
+            <th>Durée (min)</th>
+            <th>Statut</th>
+            <th>Motif</th>
+            <th>Diagnostic</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rendezvou in consultations %}
+            <tr>
+                <td>{{ rendezvou.id }}</td>
+                <td>{{ rendezvou.dateHeure ? rendezvou.dateHeure|date('d/m/Y H:i') : '—' }}</td>
+                <td>{{ rendezvou.dureeMinutes }}</td>
+                <td>{{ rendezvou.statut }}</td>
+                <td>{{ rendezvou.motif }}</td>
+                <td>{{ rendezvou.consultation.diagnostic }}</td>
+                <td>{{ rendezvou.consultation.notes }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="text-muted fst-italic mb-4">Aucune consultation</p>
+{% endif %}
+
+<h5 class="mb-3">Ordonnances</h5>
+{% set ordonnances = patient.rendezVous|filter(r => r.consultation is not null and r.consultation.ordonnance is not null) %}
+{% if ordonnances is not empty %}
+<table class="table mb-4">
+    <thead class="table-dark">
+        <tr>
+            <th>#Ordonnance</th>
+            <th>Date d'émission</th>
+            <th>Date de validité</th>
+            <th>Instructions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rendezvou in ordonnances %}
+            <tr>
+                <td>{{ rendezvou.consultation.ordonnance.id }}</td>
+                <td>{{ rendezvou.consultation.ordonnance.dateEmission ? rendezvou.consultation.ordonnance.dateEmission|date('d/m/Y') : '—' }}</td>
+                <td>{{ rendezvou.consultation.ordonnance.dateValidite ? rendezvou.consultation.ordonnance.dateValidite|date('d/m/Y') : '—' }}</td>
+                <td>{{ rendezvou.consultation.ordonnance.instructions }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="text-muted fst-italic mb-4">Aucune ordonnance</p>
+{% endif %}
+
+<h5 class="mb-3">Prescriptions</h5>
+{% set prescriptions = [] %}
+{% for rendezvou in patient.rendezVous %}
+    {% if rendezvou.consultation is not null and rendezvou.consultation.ordonnance is not null %}
+        {% set prescriptions = prescriptions|merge(rendezvou.consultation.ordonnance.prescriptions|map(p => p)) %}
+    {% endif %}
+{% endfor %}
+{% if prescriptions is not empty %}
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>Médicament</th>
+            <th>Posologie</th>
+            <th>Fréquence</th>
+            <th>Durée (jours)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prescription in prescriptions %}
+        <tr>
+            <td>{{ prescription.medicament.nom }}</td>
+            <td>{{ prescription.posologie }}</td>
+            <td>{{ prescription.frequence }}</td>
+            <td>{{ prescription.dureeJours }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="text-muted fst-italic">Aucune prescription</p>
+{% endif %}
+
+{% endblock %}
